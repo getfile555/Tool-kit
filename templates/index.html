@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Information Magic Box</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==================================== */
+        /* ✨ Refined Glassmorphism & Variables */
+        /* ==================================== */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05); /* Lighter background for better contrast */
+            --glass-border: rgba(255, 255, 255, 0.15); /* Slightly darker border */
+            --glass-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.4); /* Stronger shadow */
+            --glass-backdrop: blur(15px); /* Stronger blur effect */
+            
+            --primary-color: #723DFF; /* Royal Purple */
+            --secondary-color: #3D82FF; /* Vibrant Blue */
+            --accent-color: #FF66AA; /* Pink for contrast/success */
+            
+            --dark-bg: #0A0D18;
+            --input-bg: #1A1F30;
+            --card-inner-bg: #1A1F3050; /* A dark-blue tint for inner sections */
+            --text-light: #E0E7FF;
+            --text-fade: #A0A9C0;
+            
+            --transition-speed: 0.3s; /* Global transition speed for smoothness */
+        }
+
+        /* ------------------ */
+        /* 🎨 Base Styles */
+        /* ------------------ */
+        body {
+            margin: 0;
+            background: var(--dark-bg);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Apply smooth transition to all interactive elements */
+        button, .service-btn, input, a {
+            transition: all var(--transition-speed) ease-in-out;
+        }
+
+        /* ------------------ */
+        /* 🌌 Gradient Background */
+        /* ------------------ */
+        .bg {
+            position: fixed;
+            inset: 0;
+            /* Two large, subtle light sources for depth */
+            background: 
+                radial-gradient(circle at 10% 20%, var(--primary-color) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, var(--secondary-color) 0%, transparent 40%);
+            background-blend-mode: screen;
+            opacity: 0.4;
+            z-index: -1;
+            /* Subtle background movement animation */
+            animation: bgMove 60s infinite alternate;
+        }
+        
+        @keyframes bgMove {
+            0% { background-position: 0% 0%, 100% 100%; }
+            100% { background-position: 100% 100%, 0% 0%; }
+        }
+
+
+        /* ------------------ */
+        /* 🏆 Header & Logo */
+        /* ------------------ */
+        .hero {
+            text-align: center;
+            padding: 30px 15px 20px;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            letter-spacing: 1px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .hero span {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            color: var(--text-fade);
+            margin-top: 5px;
+            font-weight: 300;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+
+        /* ------------------ */
+        /* 🛡️ Card Container */
+        /* ------------------ */
+        .card {
+            width: 90%;
+            max-width: 850px; 
+            margin: 0 auto 40px auto;
+            padding: 30px;
+            border-radius: 25px;
+            
+            /* Glassmorphism Effect */
+            background: var(--glass-bg);
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border: 1px solid var(--glass-border);
+
+            animation: boxGlow 8s infinite alternate ease-in-out; 
+            flex-grow: 1;
+        }
+
+        @keyframes boxGlow {
+            0% { box-shadow: 0 0 15px var(--secondary-color)50, var(--glass-shadow); }
+            100% { box-shadow: 0 0 25px var(--primary-color)50, var(--glass-shadow); }
+        }
+        
+        /* (Service Grid, Query Box, Input styles) */
+        h3 {
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+        }
+
+        .service-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 10px;
+            border-radius: 18px;
+            border: 1px solid var(--input-bg);
+            cursor: pointer;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 400;
+            background: var(--card-inner-bg);
+            color: var(--text-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transform: scale(1);
+        }
+        
+        .service-btn i {
+            font-size: 22px;
+            margin-bottom: 7px;
+            color: var(--primary-color);
+        }
+
+        .service-btn:hover {
+            border-color: var(--secondary-color);
+            background: var(--input-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-color: #fff;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 0 15px var(--primary-color)60, 0 5px 15px rgba(0, 0, 0, 0.5);
+            transform: scale(1.02);
+            animation: activePulse 1.5s infinite alternate;
+        }
+        
+        .service-btn.active i {
+            color: white; 
+        }
+        
+        @keyframes activePulse {
+            from { box-shadow: 0 0 15px var(--primary-color)60, 0 5px 15px rgba(0, 0, 0, 0.5); }
+            to { box-shadow: 0 0 25px var(--accent-color)80, 0 5px 15px rgba(0, 0, 0, 0.5); }
+        }
+        
+        #queryBox {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            display: none;
+            animation: fadeInSlideUp 0.5s ease-out forwards; 
+        }
+
+        @keyframes fadeInSlideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #queryBox p {
+            margin: 0 0 8px 0;
+            font-weight: 400;
+            color: var(--text-fade);
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px 15px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            outline: none;
+            background: var(--input-bg);
+            color: var(--text-light);
+            font-size: 16px;
+            box-sizing: border-box;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--accent-color)40;
+        }
+        
+        #fetchBtn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            color: white;
+            font-weight: 600;
+            font-size: 17px;
+            box-shadow: 0 6px 15px var(--accent-color)50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #fetchBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--accent-color)70;
+        }
+        
+        #fetchBtn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px var(--accent-color)50;
+        }
+
+
+        /* ------------------ */
+        /* 💡 Result Box */
+        /* ------------------ */
+        #resultBox {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            
+            background: var(--input-bg)50;
+            border: 1px solid var(--primary-color)40;
+            
+            font-size: 14px;
+            overflow-y: auto;
+            max-height: 400px;
+            
+            animation: fadeIn 0.5s ease-out; /* Smooth fade-in of final results */
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .result-title {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        
+        #resultBox pre {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #d1d5db;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--input-bg);
+            border: 1px dashed var(--glass-border);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: auto;
+        }
+
+        /* 🆕 Styles for the embedded map */
+        .map-container {
+            margin-top: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--accent-color);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 300px; /* Fixed height for the map */
+            border: none;
+            display: block;
+        }
+        
+        /* ------------------ */
+        /* 🆕 Bouncing Loader Animation (for Button) */
+        /* ------------------ */
+        .bouncing-loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .bouncing-loader > div {
+            width: 8px;
+            height: 8px;
+            margin: 0 3px;
+            background: white;
+            border-radius: 50%;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .bouncing-loader > div:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .bouncing-loader > div:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-5px);
+                opacity: 0.6;
+            }
+        }
+
+        /* ------------------ */
+        /* 🆕 Shimmer Effect (for Results Box) */
+        /* ------------------ */
+        .shimmer-wrapper {
+            background: var(--input-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .shimmer {
+            height: 15px; 
+            margin: 10px 0;
+            border-radius: 4px;
+            background: linear-gradient(to right, 
+                var(--input-bg) 0%, 
+                rgba(255, 255, 255, 0.05) 20%, /* The light flash */
+                var(--input-bg) 40%);
+            background-size: 1000px 100%;
+            animation: shimmer-animation 1.5s infinite linear;
+        }
+        
+        /* Slightly wider shimmer for the first line/title */
+        .shimmer:first-child {
+            width: 60%;
+            height: 20px; 
+            margin-top: 5px;
+        }
+        
+        /* Varying widths for line effect */
+        .shimmer:nth-child(2) { width: 95%; }
+        .shimmer:nth-child(3) { width: 80%; }
+        .shimmer:nth-child(4) { width: 50%; }
+        .shimmer:nth-child(5) { width: 90%; }
+        .shimmer:nth-child(6) { width: 70%; }
+
+
+        @keyframes shimmer-animation {
+            0% {
+                background-position: -468px 0;
+            }
+            100% {
+                background-position: 468px 0;
+            }
+        }
+        
+        /* ------------------ */
+        /* 🦶 Footer Watermark */
+        /* ------------------ */
+        .watermark {
+            text-align: center;
+            padding: 15px;
+            font-size: 13px;
+            color: var(--text-fade);
+            margin-top: auto;
+        }
+        
+        .watermark span {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* ------------------ */
+        /* 🆕 Disclaimer Overlay Styles */
+        /* ------------------ */
+        #disclaimerOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85); /* Darker, semi-transparent background to hide the app fully */
+            z-index: 1000; /* Ensure it is on top of everything */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
+        
+        #disclaimerOverlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .disclaimer-content {
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 25px;
+            text-align: center;
+            
+            /* Glassmorphism Effect - Matching the main card */
+            background: var(--glass-bg);
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border: 1px solid var(--glass-border);
+            
+            animation: fadeInScale 0.5s ease-out;
+        }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .disclaimer-content h2 {
+            font-size: 24px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .disclaimer-content h2 i {
+            margin-right: 10px;
+            font-size: 30px;
+        }
+        
+        .disclaimer-content p {
+            color: var(--text-light);
+            font-size: 15px;
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+        
+        .disclaimer-content strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        #acceptBtn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px 30px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+            font-size: 17px;
+            box-shadow: 0 6px 15px var(--primary-color)50;
+        }
+
+        #acceptBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--primary-color)70;
+        }
+        
+        #acceptBtn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px var(--primary-color)50;
+        }
+
+
+        /* ------------------ */
+        /* 📱 Mobile Adjustments */
+        /* ------------------ */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 30px;
+            }
+            .card {
+                padding: 20px;
+                border-radius: 20px;
+            }
+            .service-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 8px;
+            }
+            .service-btn {
+                font-size: 11px;
+                padding: 15px 5px;
+            }
+            .disclaimer-content h2 {
+                font-size: 22px;
+            }
+            .disclaimer-content p {
+                font-size: 13px;
+            }
+            #acceptBtn {
+                font-size: 15px;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg"></div>
+    
+    <div id="disclaimerOverlay">
+        <div class="disclaimer-content">
+            <h2><i class="fas fa-exclamation-triangle"></i> Important Disclaimer</h2>
+            
+            <p>
+                This tool has been created strictly for **educational and development purposes** only. It demonstrates API integration and front-end design techniques.
+            </p>
+            
+            <p>
+                We **do not collect, store, or misuse** any information entered here. The information retrieved by third-party APIs is publicly available.
+            </p>
+            
+            <p style="color: var(--accent-color); font-weight: 600;">
+                By proceeding, you acknowledge that the developer is **not responsible** for any misuse or illegal activities performed by users of this application.
+            </p>
+            
+            <button id="acceptBtn">I Understand & Accept</button>
+        </div>
+    </div>
+    <div class="hero">
+        <img src="https://i.postimg.cc/nzDPnjWs/IMG-20250829-232642-555.jpg" alt="Logo" class="logo">
+        <h1>The Information <span>Magic</span> Box</h1>
+        <p>Instant lookup tools for numbers, IDs, accounts & more. Powered by Kexer.</p>
+    </div>
+
+    <div class="card">
+
+        <h3 style="text-align:center;">🔍 Select a Service to Begin</h3>
+
+        <div class="service-grid">
+            <button class="service-btn" data-service="phone"><i class="fas fa-phone"></i> Phone Number</button>
+            <button class="service-btn" data-service="pan"><i class="fas fa-id-card"></i> PAN Info</button>
+            <button class="service-btn" data-service="vehicle"><i class="fas fa-car"></i> Vehicle RC</button>
+            <button class="service-btn" data-service="ifsc"><i class="fas fa-university"></i> IFSC Code</button>
+            <button class="service-btn" data-service="gmail"><i class="fas fa-envelope"></i> Gmail Check</button>
+            <button class="service-btn" data-service="instagram"><i class="fab fa-instagram"></i> Instagram</button>
+            <button class="service-btn" data-service="ip"><i class="fas fa-globe"></i> IP Lookup</button>
+            <button class="service-btn" data-service="pak_number"><i class="fas fa-mobile-alt"></i> Pak Number</button>
+            <button class="service-btn" data-service="geolocation"><i class="fas fa-map-marker-alt"></i> Geolocation</button> 
+            <button class="service-btn" data-service="ff_uid"><i class="fas fa-fire"></i> FF UID Info</button>
+            <button class="service-btn" data-service="ff_ban"><i class="fas fa-ban"></i> FF Ban Check</button>
+            <button class="service-btn" data-service="gethub"><i class="fab fa-github"></i> GitHub Info</button>
+        </div>
+
+        <div id="queryBox">
+            <p id="queryLabel">Enter Query</p>
+            <input id="queryInput" type="text" placeholder="Enter number / ID / username">
+            <button id="fetchBtn">✨ Get Information</button>
+        </div>
+
+      
+        <div id="resultBox"></div>
+
+    </div>
+    
+    <div class="watermark">
+        Interface designed by And Original logic by <span>kexer</span>.
+    </div>
+
+    <script>
+        let selectedService = null;
+        const serviceButtons = document.querySelectorAll(".service-btn");
+        const queryBox = document.getElementById("queryBox");
+        const resultBox = document.getElementById("resultBox");
+        const queryInput = document.getElementById("queryInput");
+        const queryLabel = document.getElementById("queryLabel");
+        const fetchBtn = document.getElementById("fetchBtn");
+        
+        // NEW DISCLAIMER ELEMENTS
+        const disclaimerOverlay = document.getElementById("disclaimerOverlay");
+        const acceptBtn = document.getElementById("acceptBtn");
+        
+        // Event listener for the Accept button
+        acceptBtn.addEventListener('click', () => {
+            // Smoothly hide the disclaimer and allow page access
+            disclaimerOverlay.classList.add('hidden');
+        });
+
+        // Event listener delegation for service buttons
+        serviceButtons.forEach(button => {
+            button.addEventListener('click', () => selectService(button.getAttribute('data-service'), button));
+        });
+
+        fetchBtn.addEventListener('click', fetchData);
+
+
+        function selectService(service, element) {
+            selectedService = service;
+            
+            // Remove 'active' from all buttons
+            serviceButtons.forEach(b => b.classList.remove("active"));
+            
+            // Add 'active' to the clicked button
+            element.classList.add("active");
+
+            // Show query box and reset result box
+            queryBox.style.display = "block";
+            resultBox.innerHTML = "";
+            
+            // Set Keyboard Type, Placeholder, and Label
+            let placeholderText = 'Enter query...';
+            let labelText = 'Enter Query';
+            let inputType = 'text';
+
+            if (service === 'phone' || service === 'pak_number') {
+                inputType = 'tel'; 
+                placeholderText = 'e.g., 9876543210 (10 digits)';
+                labelText = 'Enter Phone Number';
+            } else if (service === 'ifsc') {
+                placeholderText = 'e.g., HDFC0000001 (IFSC Code)';
+                labelText = 'Enter IFSC Code';
+            } else if (service === 'pan') {
+                 placeholderText = 'e.g., ABCDE1234F (PAN Number)';
+                 labelText = 'Enter PAN Number';
+            } else if (service === 'vehicle') {
+                 placeholderText = 'e.g., DL3CAAAA0001 (Vehicle RC Number)';
+                 labelText = 'Enter Vehicle RC Number';
+            } else if (service === 'instagram') {
+                 placeholderText = 'e.g., zuck (Instagram Username)';
+                 labelText = 'Enter Instagram Username';
+            } else if (service === 'ip' || service === 'geolocation') { 
+                 placeholderText = 'e.g., 8.8.8.8 (IP Address)';
+                 labelText = 'Enter IP Address';
+            } else if (service === 'gethub') { // <-- NEW SERVICE LOGIC
+                 placeholderText = 'e.g., torvalds (GitHub Username)';
+                 labelText = 'Enter GitHub Username';
+            } else {
+                placeholderText = 'Enter number / ID / username';
+                labelText = 'Enter Query';
+            }
+            
+            queryInput.setAttribute('type', inputType);
+            queryInput.setAttribute('placeholder', placeholderText);
+            queryLabel.textContent = labelText;
+            queryInput.value = "";
+            
+            // Focus the input button
+            queryInput.focus();
+        }
+
+        /* Fetch API - MODIFIED TO CONNECT TO FLASK BACKEND */
+        async function fetchData() {
+            let query = queryInput.value.trim();
+
+            if (!selectedService) {
+                resultBox.innerHTML = `<div class='result-title' style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--accent-color')};">⚠️ Please select a service first.</div>`;
+                return;
+            }
+            
+            if (!query) {
+                resultBox.innerHTML = `<div class='result-title' style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--accent-color')};">❌ Please enter a query value.</div>`;
+                queryInput.focus();
+                return;
+            }
+
+            // 1. Disable button and display loading animation (Bouncing Dots)
+            fetchBtn.disabled = true;
+            fetchBtn.innerHTML = `LOADING <div class='bouncing-loader'><div></div><div></div><div></div></div>`;
+            
+            // 2. Display Shimmer Effect in the result box
+            resultBox.innerHTML = `
+                <div class='result-title' style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--accent-color')};">
+                    Fetching data for **${selectedService.toUpperCase()}**...
+                </div>
+                <div class='shimmer-wrapper'>
+                    <div class='shimmer'></div>
+                    <div class='shimmer'></div>
+                    <div class='shimmer'></div>
+                    <div class='shimmer'></div>
+                    <div class='shimmer'></div>
+                    <div class='shimmer'></div>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('/fetch', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        service: selectedService,
+                        query: query
+                    })
+                });
+
+                const data = await response.json();
+
+                // clear input after submit
+                queryInput.value = "";
+
+                if (!data.success) {
+                    resultBox.innerHTML = `<div class='result-title' style="color: red;">❌ Operation Failed</div><pre style="color: #ff8c8c;">No Data Found or API Error.\nMessage: ${data.message || 'Check the console for details.'}</pre>`;
+                    return;
+                }
+                
+                // --- SPECIAL HANDLING FOR GEOLOCATION ---
+                if (data.is_geolocation) {
+                    const { raw_data, map_link, city, country } = data.result;
+                    
+                    // Format the raw data nicely
+                    const formattedGeoData = JSON.stringify(raw_data, null, 2);
+                    
+                    resultBox.innerHTML = `
+                        <div class='result-title'>✅ Geolocation Data Retrieved</div>
+                        
+                        <p style="font-weight: 600;">Location: ${city ? city + ', ' : ''}${country}</p>
+                        
+                        <div class="map-container">
+                            <iframe src="${map_link}" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+
+                        <div class='result-title' style="font-size: 16px; margin-top: 20px;">Raw API Response</div>
+                        <pre>${formattedGeoData}</pre>
+                    `;
+                    return;
+                }
+                // --- END SPECIAL HANDLING ---
+                
+                /* Format results beautifully (Default for all other services, including 'gethub') */
+                const result = data.result;
+
+                function formatValue(val) {
+                    if (val === null) return 'NULL';
+                    if (typeof val === 'boolean') return val ? 'YES' : 'NO';
+                    return String(val);
+                }
+
+                function formatObject(obj, indent = 0) {
+                    let s = '';
+                    const indentStr = ' '.repeat(indent * 4);
+
+                    for (let key in obj) {
+                        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                            let formattedKey = key.replace(/_/g, ' ').toUpperCase();
+                            let value = obj[key];
+
+                            if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                                s += `${indentStr}• **${formattedKey}**:\n${formatObject(value, indent + 1)}`;
+                            } else if (Array.isArray(value)) {
+                                s += `${indentStr}• **${formattedKey}**:\n`;
+                                value.forEach((item, index) => {
+                                    if (typeof item === 'object' && item !== null) {
+                                         s += `${indentStr}    - [${index}] Item:\n${formatObject(item, indent + 2)}`;
+                                    } else {
+                                        s += `${indentStr}    - [${index}] : ${formatValue(item)}\n`;
+                                    }
+                                });
+                            } else {
+                                s += `${indentStr}• **${formattedKey}** : ${formatValue(value)}\n`;
+                            }
+                        }
+                    }
+                    return s;
+                }
+                
+                const text = formatObject(result, 0);
+
+                // 3. Insert Final Results
+                resultBox.innerHTML = `<div class='result-title'>✅ Data Retrieved for ${selectedService.toUpperCase()}</div><pre>${text}</pre>`;
+                
+            } catch (error) {
+                console.error("Fetch error:", error);
+                resultBox.innerHTML = `<div class='result-title' style="color: red;">🚨 Connection Error</div><pre style="color: #ff8c8c;">A network error occurred while connecting to the server: ${error.message}</pre>`;
+            } finally {
+                // 4. Re-enable button and reset text
+                fetchBtn.disabled = false;
+                fetchBtn.innerHTML = "✨ Get Information";
+            }
+        }
+    </script>
+
+</body>
+</html>
