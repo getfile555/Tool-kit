@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Note: Geolocation is handled separately as it uses a fixed API and custom logic.
 # -------------------------------
 SERVICE_APIS = {
-    "phone": "https://abbas-apis.vercel.app/api/phone?number=",
+    "phone": "https://source-code-api.vercel.app/?num=",
     "pan": "https://abbas-apis.vercel.app/api/pan?pan=",
     "vehicle": "https://Tobi-rc-api.vercel.app/?rc_number=",
     "ifsc": "https://abbas-apis.vercel.app/api/ifsc?ifsc=",
@@ -18,7 +18,7 @@ SERVICE_APIS = {
     "pak_number": "https://abbas-apis.vercel.app/api/pakistan?number=",
     "ff_uid": "https://abbas-apis.vercel.app/api/ff-info?uid=",
     "ff_ban": "https://abbas-apis.vercel.app/api/ff-ban?uid=",
-    "geolocation": "https://ipwhois.app/json/", 
+    "geolocation": "https://abbas-apis.vercel.app/api/ip?ip=", 
     "gethub": "https://abbas-apis.vercel.app/api/github?username=", # <-- NEW SERVICE ADDED
 }
 
